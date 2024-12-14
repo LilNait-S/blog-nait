@@ -15,6 +15,7 @@ export async function getAllPublicationController(_: Request, res: Response) {
     res.status(response.statusCode).json({ message: response.data });
   }
 }
+
 export async function getByIdPublicationController(
   req: Request,
   res: Response
@@ -26,6 +27,7 @@ export async function getByIdPublicationController(
     res.status(response.statusCode).json({ message: response.data });
   }
 }
+
 export async function createPublicationController(req: Request, res: Response) {
   const response = await createPublicationService({ input: req.body });
   if (response.success) {
@@ -34,6 +36,7 @@ export async function createPublicationController(req: Request, res: Response) {
     res.status(response.statusCode).json({ message: response.data });
   }
 }
+
 export async function deletePublicationController(req: Request, res: Response) {
   const response = await deletePublicationService({ user_id: +req.params.id });
   if (response.success) {
@@ -42,6 +45,7 @@ export async function deletePublicationController(req: Request, res: Response) {
     res.status(response.statusCode).json({ message: response.data });
   }
 }
+
 export async function updatePublicationController(req: Request, res: Response) {
   const response = await updatePublicationService({
     input: req.body,
