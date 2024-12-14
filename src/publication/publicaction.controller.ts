@@ -46,7 +46,7 @@ export async function deletePublicationController(req: Request, res: Response) {
 export async function updatePublicationController(req: Request, res: Response) {
   const response = await updatePublicationService({
     input: req.body,
-    user_id: +req.params,
+    user_id: +req.params.id,
   });
   if (response.success) {
     res.status(response.statusCode).json(response.data);

@@ -20,7 +20,7 @@ publicationRouter.post(
 );
 publicationRouter.delete(`${prefix}/:id`, deletePublicationController);
 publicationRouter.patch(
-  `${prefix}`,
+  `${prefix}/:id`,
   validateFormPublication,
   updatePublicationController
 );
