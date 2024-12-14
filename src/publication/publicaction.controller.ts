@@ -38,7 +38,7 @@ export async function createPublicationController(req: Request, res: Response) {
 export async function deletePublicationController(req: Request, res: Response) {
   const response = await deletePublicationService({ user_id: +req.params.id });
   if (response.success) {
-    res.status(response.statusCode).json(response.data);
+    res.status(response.statusCode).json(response.message);
   } else {
     res.status(response.statusCode).json({ message: response.data });
   }
