@@ -14,12 +14,13 @@ datasource db {
 }
 
 model user {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  password     String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  publications publication[]
 }
 
 model publication {
@@ -29,4 +30,5 @@ model publication {
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      user     @relation(fields: [user_id], references: [id])
 }
