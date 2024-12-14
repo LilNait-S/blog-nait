@@ -19,7 +19,6 @@ export async function getByIdPublicationController(
   req: Request,
   res: Response
 ) {
-  console.log(req.params);
   const response = await getByIdPublicationService({ user_id: +req.params.id });
   if (response.success) {
     res.status(response.statusCode).json(response.data);

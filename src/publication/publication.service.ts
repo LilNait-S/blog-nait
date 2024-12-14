@@ -23,8 +23,6 @@ export async function getByIdPublicationService({
       where: { id: user_id },
     });
 
-    console.log(publication);
-
     return successResponse(publication, "Publication by id successfully");
   } catch (error) {
     return errorResponse(error, "Error to get by id publication");

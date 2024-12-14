@@ -3,7 +3,9 @@ import cors from "cors";
 const ACCEPTED_ORIGINS = [
   "http://localhost:8080",
   "http://localhost:1234",
-  "https://google.com",
+  "http://localhost:3000",
+  "https://lilnait.vercel.app/",
+  process.env.URL_DOMAIN ?? "",
 ];
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
