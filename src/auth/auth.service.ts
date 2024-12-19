@@ -1,5 +1,5 @@
 import { successResponse } from "../common";
-import { envConfig } from "../config/env.config";
+import { env } from "../core/config/env.config";
 import { compare, encrypt } from "../encrypt/bcrypt.service";
 import prisma from "../prisma/prisma.config";
 import jwt from "jsonwebtoken";
@@ -15,7 +15,7 @@ export async function registerService(data: any) {
 
     const { id, name, email } = created;
 
-    const token = jwt.sign({ id, name, email }, envConfig.JWT_SECRET, {
+    const token = jwt.sign({ id, name, email }, env.JWT_SECRET, {
       expiresIn: "30d",
     });
 
@@ -55,7 +55,7 @@ export async function loginService(data: any) {
 
     const { id, name, email } = user;
 
-    const token = jwt.sign({ id, name, email }, envConfig.JWT_SECRET, {
+    const token = jwt.sign({ id, name, email }, env.JWT_SECRET, {
       expiresIn: "30d",
     });
 
@@ -80,7 +80,7 @@ export async function loginService(data: any) {
 
 export async function meService(token: string) {
   try {
-    const { id, name, email } = jwt.verify(token, envConfig.JWT_SECRET) as any;
+    const { id, name, email } = jwt.verify(token, env.JWT_SECRET) as any;
     const user = await prisma.user.findFirst({
       where: {
         id,

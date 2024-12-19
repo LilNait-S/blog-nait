@@ -7,8 +7,20 @@ import {
   updatePublicationService,
 } from "./publication.service";
 
+export async function uploadImgPublicationController(
+  req: Request,
+  res: Response
+) {
+  res.status(200).json({
+    message: "File upload succesfully",
+    file: req.file as Express.Multer.File,
+  });
+}
+
 export async function getAllPublicationController(_: Request, res: Response) {
+  console.log("start");
   const response = await getAllPublicationService();
+  console.log("response", response);
   if (response.success) {
     res.status(response.statusCode).json(response.data);
   } else {
@@ -29,7 +41,7 @@ export async function getByIdPublicationController(
 }
 
 export async function createPublicationController(req: Request, res: Response) {
-  const response = await createPublicationService({ input: req.body });
+  const response = await createPublicationService({ data: req.body });
   if (response.success) {
     res.status(response.statusCode).json(response.data);
   } else {
@@ -48,7 +60,7 @@ export async function deletePublicationController(req: Request, res: Response) {
 
 export async function updatePublicationController(req: Request, res: Response) {
   const response = await updatePublicationService({
-    input: req.body,
+    data: req.body,
     user_id: +req.params.id,
   });
   if (response.success) {

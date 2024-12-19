@@ -1,31 +1,22 @@
-import { createdResponse, errorResponse, notFoundResponse, successResponse } from "../common";
-import prisma from "../prisma/prisma.config";
-
+import { errorResponse, notFoundResponse, successResponse } from "../common";
+import { userRepository } from "./user.repository";
 
 export async function getUsers() {
   try {
-    const users = await prisma.user.findMany();
+    const users = await userRepository.getUsers();
     return successResponse(users, "Users fetched successfully");
   } catch (error) {
     return errorResponse(error, "Error fetching users");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
 export async function getUser({ user_id }: { user_id: number }) {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: user_id },
-    });
-
+    const user = await userRepository.getUser({ id: user_id });
     if (!user) return notFoundResponse(null, "User not found");
-
     return successResponse(user, "User fetched successfully");
   } catch (error) {
     return errorResponse(error, "Error fetching user");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -37,29 +28,18 @@ export async function updateUser({
   data: any;
 }) {
   try {
-    const userUpdated = await prisma.user.update({
-      where: { id: user_id },
-      data,
-    });
-
+    const userUpdated = await userRepository.updateUser({ id: user_id, data });
     return successResponse(userUpdated, "User updated successfully");
   } catch (error) {
     return errorResponse(error, "Error updating user");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
 export async function deleteUser({ user_id }: { user_id: number }) {
   try {
-    await prisma.user.delete({
-      where: { id: user_id },
-    });
-
+    await userRepository.deleteUser({ id: user_id });
     return successResponse(null, "User deleted successfully");
   } catch (error) {
     return errorResponse(error, "Error deleting user");
-  } finally {
-    await prisma.$disconnect();
   }
 }

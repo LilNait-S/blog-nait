@@ -1,15 +1,13 @@
 import { errorResponse, successResponse } from "../common";
-import prisma from "../prisma/prisma.config";
-import { IPublication } from "./publication.schema";
+import { publicationRepository } from "./publication.repository";
+import { IPublicationSchema } from "./publication.schema";
 
 export async function getAllPublicationService() {
   try {
-    const publications = await prisma.publication.findMany();
+    const publications = await publicationRepository.getAllPublications();
     return successResponse(publications, "Feching successfully");
   } catch (error) {
     return errorResponse(error, "Error to get publications");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -19,30 +17,26 @@ export async function getByIdPublicationService({
   user_id: number;
 }) {
   try {
-    const publication = await prisma.publication.findUnique({
-      where: { id: user_id },
+    const publication = await publicationRepository.getPublication({
+      id: user_id,
     });
 
     return successResponse(publication, "Publication by id successfully");
   } catch (error) {
     return errorResponse(error, "Error to get by id publication");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
 export async function createPublicationService({
-  input,
+  data,
 }: {
-  input: IPublication;
+  data: IPublicationSchema;
 }) {
   try {
-    const created = await prisma.publication.create({ data: input });
+    const created = await publicationRepository.createPublication({ data });
     return successResponse(created, "Publication created successfully");
   } catch (error) {
     return errorResponse(error, "Error to create publication");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -52,30 +46,26 @@ export async function deletePublicationService({
   user_id: number;
 }) {
   try {
-    await prisma.publication.delete({ where: { id: user_id } });
+    await publicationRepository.deletePublication({ id: user_id });
     return successResponse(null, "Publication deleted successfully");
   } catch (error) {
     return errorResponse(error, "Error to delete publication");
-  } finally {
-    await prisma.$disconnect();
   }
 }
 export async function updatePublicationService({
   user_id,
-  input,
+  data,
 }: {
   user_id: number;
-  input: IPublication;
+  data: IPublicationSchema;
 }) {
   try {
-    const updated = await prisma.publication.update({
-      where: { id: user_id },
-      data: input,
+    const updated = await publicationRepository.updatePublication({
+      id: user_id,
+      data,
     });
     return successResponse(updated, "Publication updated successfully");
   } catch (error) {
     return errorResponse(error, "Error to update publication");
-  } finally {
-    await prisma.$disconnect();
   }
 }

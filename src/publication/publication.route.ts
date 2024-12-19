@@ -1,15 +1,25 @@
-import express from "express";
+import { Router } from "express";
 import {
-    createPublicationController,
-    deletePublicationController,
-    getAllPublicationController,
-    getByIdPublicationController,
-    updatePublicationController,
+  createPublicationController,
+  deletePublicationController,
+  getAllPublicationController,
+  getByIdPublicationController,
+  updatePublicationController,
+  uploadImgPublicationController,
 } from "./publicaction.controller";
-import { validateFormPublication } from "./publication.middleware";
+import {
+  validateFormPublication,
+  validateImagePublication,
+} from "./publication.middleware";
 
-const publicationRouter = express.Router();
+const publicationRouter = Router();
 const prefix = "/publications";
+
+publicationRouter.post(
+  `${prefix}/image`,
+  validateImagePublication,
+  uploadImgPublicationController
+);
 
 publicationRouter.get(`${prefix}`, getAllPublicationController);
 publicationRouter.get(`${prefix}/:id`, getByIdPublicationController);
@@ -25,4 +35,4 @@ publicationRouter.patch(
   updatePublicationController
 );
 
-export default publicationRouter
+export default publicationRouter;

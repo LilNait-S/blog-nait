@@ -1,11 +1,11 @@
 import cors from "cors";
+import { env } from "../config/env.config";
 
 const ACCEPTED_ORIGINS = [
   "http://localhost:8080",
   "http://localhost:1234",
   "http://localhost:3000",
-  "https://lilnait.vercel.app/",
-  process.env.URL_DOMAIN ?? "",
+  env.URL_DOMAIN,
 ];
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
